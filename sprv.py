@@ -44,6 +44,28 @@ def find_contact_index(contacts, search_query):
             return i
     return -1
 
+def update_contact(contacts):
+    search_query = input("Введите фамилию, имя или отчество контакта, которого хотите изменить: ")
+    contact_index = find_contact_index(contacts, search_query)
+    if contact_index != -1:
+        print("Найден следующий контакт:")
+        display_contacts([contacts[contact_index]])
+        surname = input("Введите новую фамилию (оставьте пустым, если не хотите менять): ")
+        name = input("Введите новое имя (оставьте пустым, если не хотите менять): ")
+        patronymic = input("Введите новое отчество (оставьте пустым, если не хотите менять): ")
+        phone_number = input("Введите новый номер телефона (оставьте пустым, если не хотите менять): ")
+        if surname:
+            contacts[contact_index][0] = surname
+        if name:
+            contacts[contact_index][1] = name
+        if patronymic:
+            contacts[contact_index][2] = patronymic
+        if phone_number:
+            contacts[contact_index][3] = phone_number
+        print("Контакт успешно обновлен.")
+    else:
+        print("Контакт не найден.")
+
 def main():
     contacts = load_contacts()
 
@@ -51,8 +73,9 @@ def main():
         print("Выберите действие:")
         print("1. Показать все контакты")
         print("2. Добавить новый контакт")
-        print("3. Сохранить контакты")
-        print("4. Выйти")
+        print("3. Изменить существующий контакт")
+        print("4. Сохранить контакты")
+        print("5. Выйти")
 
         choice = input("Ваш выбор: ")
         print()
@@ -64,8 +87,10 @@ def main():
             contacts.append(contact)
             print("Контакт успешно добавлен.")
         elif choice == "3":
-            save_contacts(contacts)
+            update_contact(contacts)
         elif choice == "4":
+            save_contacts(contacts)
+        elif choice == "5":
             break
         else:
             print("Некорректный выбор. Попробуйте еще раз.")
