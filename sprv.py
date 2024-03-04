@@ -66,6 +66,19 @@ def update_contact(contacts):
     else:
         print("Контакт не найден.")
 
+def delete_contact(contacts):
+    search_query = input("Введите фамилию, имя или отчество контакта, которого хотите удалить: ")
+    contact_index = find_contact_index(contacts, search_query)
+    if contact_index != -1:
+        print("Найден следующий контакт:")
+        display_contacts([contacts[contact_index]])
+        confirmation = input("Вы уверены, что хотите удалить этот контакт? (y/n): ")
+        if confirmation.strip().lower() == "y":
+            del contacts[contact_index]
+            print("Контакт успешно удален.")
+    else:
+        print("Контакт не найден.")
+
 def main():
     contacts = load_contacts()
 
@@ -74,8 +87,9 @@ def main():
         print("1. Показать все контакты")
         print("2. Добавить новый контакт")
         print("3. Изменить существующий контакт")
-        print("4. Сохранить контакты")
-        print("5. Выйти")
+        print("4. Удалить контакт")
+        print("5. Сохранить контакты")
+        print("6. Выйти")
 
         choice = input("Ваш выбор: ")
         print()
@@ -89,8 +103,10 @@ def main():
         elif choice == "3":
             update_contact(contacts)
         elif choice == "4":
-            save_contacts(contacts)
+            delete_contact(contacts)
         elif choice == "5":
+            save_contacts(contacts)
+        elif choice == "6":
             break
         else:
             print("Некорректный выбор. Попробуйте еще раз.")
